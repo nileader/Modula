@@ -1,0 +1,6 @@
+modula-demo/target/
+modula-core/target/
+modula-util/target/
+modules/d8y-logback-1.2.11/adapter.jar
+modules/d8y-logback-1.4.14/adapter.jar
+.idea/
