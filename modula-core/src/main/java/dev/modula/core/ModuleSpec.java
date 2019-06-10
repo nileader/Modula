@@ -40,7 +40,7 @@ public final class ModuleSpec {
 
     /**
      * An unmodifiable set of fully qualified class names that are exported and can be
-     * instantiated by external code via {@link ClassFindRuntime.IsolatedModule#getInstance(String, Class)}.
+     * instantiated by external code via {@link ModulaRuntime.IsolatedModule#getInstance(String, Class)}.
      */
     private final Set<String> exportedClasses;
 
