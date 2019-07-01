@@ -19,7 +19,7 @@ public final class ModuleSpec {
     /**
      * The name of the module.
      */
-    private final String name;
+    private final String  name;
 
     /**
      * The path to the adapter JAR file that contains the module's implementation classes.
