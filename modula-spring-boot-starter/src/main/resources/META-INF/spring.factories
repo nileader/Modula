@@ -1,0 +1,4 @@
+# 文件路径: modula-spring-boot-starter/src/main/resources/META-INF/spring.factories
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+dev.modula.spring.boot.ModulaAutoConfiguration

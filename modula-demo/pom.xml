@@ -8,7 +8,7 @@
     <parent>
         <groupId>dev.modula</groupId>
         <artifactId>modula</artifactId>
-        <version>1.0.0</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>modula-demo</artifactId>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>dev.modula</groupId>
             <artifactId>modula-core</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- logback 仅用于编译适配器类，运行时由 ClassFind 动态加载 -->

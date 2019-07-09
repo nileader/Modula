@@ -7,7 +7,7 @@
 
     <groupId>dev.modula</groupId>
     <artifactId>modula</artifactId>
-    <version>1.0.0</version>
+    <version>${project.version}</version>
     <packaging>pom</packaging>
 
     <name>Modula</name>
@@ -24,6 +24,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.version>0.0.2-SNAPSHOT</project.version>
     </properties>
 
     <licenses>

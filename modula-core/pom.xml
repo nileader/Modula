@@ -8,7 +8,7 @@
     <parent>
         <groupId>dev.modula</groupId>
         <artifactId>modula</artifactId>
-        <version>1.0.0</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>modula-core</artifactId>
@@ -17,8 +17,11 @@
     <name>Modula Core</name>
     <description>Core runtime for Java class loading isolation</description>
 
-    <!-- 无任何第三方依赖，纯 JDK -->
     <dependencies>
-        <!-- None -->
+        <dependency>
+            <groupId>dev.modula</groupId>
+            <artifactId>modula-util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

@@ -2,6 +2,8 @@
 // Copyright (c) 2015 Modula Authors. All rights reserved.
 package dev.modula.core;
 
+import dev.modula.util.ClassLoaderUtil;
+
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
@@ -25,6 +27,7 @@ import java.util.jar.JarFile;
  * <p>Each JAR is associated with its own {@link CodeSource}, ensuring accurate class origin metadata.</p>
  */
 public final class ModulaClassLoader extends ClassLoader {
+
     /**
      * The JAR file containing the module's adapter implementation.
      */
@@ -46,7 +49,12 @@ public final class ModulaClassLoader extends ClassLoader {
     private final List<CodeSource> dependencyCodeSources;
 
     /**
-     * Normalized set of shared package prefixes (each ends with '.').
+     * Normalized set of shared package prefixes (each ends with '.').<br/>
+     * e.g. <br/>
+     * dev.modula.core. <br/>
+     * dev.modula.util. <br/>
+     * dev.modula.demo. <br/>
+     * <br/>
      * Classes in these packages may be loaded by the parent class loader.
      */
     private final Set<String> sharedPackages;
@@ -82,30 +90,36 @@ public final class ModulaClassLoader extends ClassLoader {
         } catch (Exception e) {
             throw new RuntimeException("Cannot open JAR", e);
         }
-        this.sharedPackages = normalizeSharedPackages(spec.getSharedPackages());
+        this.sharedPackages = ClassLoaderUtil.normalizeSharedPackages(spec.getSharedPackages());
         this.exportedClasses = Collections.unmodifiableSet(spec.getExportedClasses());
     }
 
-    /**
-     * Normalizes package names by ensuring each ends with a dot ('.').
-     *
-     * @param packages the original package names
-     * @return a new set of normalized package names
-     */
-    private static Set<String> normalizeSharedPackages(Set<String> packages) {
-        Set<String> result = new HashSet<>();
-        for (String pkg : packages) {
-            if (!pkg.endsWith(".")) {
-                pkg = pkg + ".";
+    @Override
+    protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+        synchronized (getClassLoadingLock(name)) {
+            // Step 1: check if loaded?
+            Class<?> loadedClass = findLoadedClass(name);
+            if (loadedClass != null) {
+                if (resolve) resolveClass(loadedClass);
+                return loadedClass;
             }
-            result.add(pkg);
+
+            // Step 2: if shared package，use parent classloader(Main app classload) to load
+            if (isSharedPackage(name)) {
+                return super.loadClass(name, resolve);
+            }
+
+            // Step 3: others, use module self classloader
+            try {
+                return findClass(name);
+            } catch (ClassNotFoundException e) {
+                throw new ClassNotFoundException("Can't load class "+ name +" from module",e);
+            }
         }
-        return result;
     }
 
     /**
-     * Attempts to find and define a class by searching first in the adapter JAR
-     * (if allowed by export/shared rules), then in dependency JARs.
+     * Attempts to find and define a class in module, first adapter jar,then d8y.
      *
      * @param name the fully qualified class name
      * @return the loaded and defined class
@@ -114,21 +128,18 @@ public final class ModulaClassLoader extends ClassLoader {
      */
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        // 1. 从 adapter JAR 中加载（仅限 exported 或 shared）
+        // Step3.1. 从 adapter JAR 中加载
         byte[] bytes = loadClassData(adapterJarFile, name);
         if (bytes != null) {
-            if (exportedClasses.contains(name) || isSharedPackage(name)) {
-                return defineClass(name, bytes, 0, bytes.length, new ProtectionDomain(adapterCodeSource, null));
-            } else {
-                throw new SecurityException("Class not accessible: " + name);
-            }
+            return defineClass(name, bytes, 0, bytes.length, new ProtectionDomain(adapterCodeSource, null));
         }
-        // 2. 从 dependency JARs 中加载（私有依赖）
+
+        // Step3.2. 从 dependency JARs 中加载（私有依赖）
         for (int i = 0; i < dependencyJarFiles.size(); i++) {
             JarFile jar = dependencyJarFiles.get(i);
-            CodeSource cs_dep = dependencyCodeSources.get(i);
             byte[] _bytes = loadClassData(jar, name);
             if (_bytes != null) {
+                CodeSource cs_dep = dependencyCodeSources.get(i);
                 return defineClass(name, _bytes, 0, _bytes.length, new ProtectionDomain(cs_dep, null));
             }
         }
@@ -144,14 +155,13 @@ public final class ModulaClassLoader extends ClassLoader {
     private boolean isSharedPackage(String className) {
         int lastDot = className.lastIndexOf('.');
         String packageName = (lastDot == -1) ? "" : className.substring(0, lastDot) + ".";
-        for (String shared : sharedPackages) {
-            if (packageName.startsWith(shared)) {
+        for (String sharedPkg : sharedPackages) {
+            if (packageName.startsWith(sharedPkg)) {
                 return true;
             }
         }
         return false;
     }
-
 
     /**
      * Loads the bytecode of a class from the given JAR file.
@@ -177,4 +187,12 @@ public final class ModulaClassLoader extends ClassLoader {
             throw new RuntimeException("Failed to read class: " + className, e);
         }
     }
+
+    public void close() throws IOException {
+        adapterJarFile.close();
+        for (JarFile jar : dependencyJarFiles) {
+            jar.close();
+        }
+    }
+
 }
