@@ -7,7 +7,7 @@
 
     <groupId>dev.modula</groupId>
     <artifactId>modula</artifactId>
-    <version>${project.version}</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Modula</name>
@@ -18,13 +18,29 @@
         <module>modula-core</module>
         <module>modula-demo</module>
         <module>modula-util</module>
+        <module>modula-spring-boot-starter</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.3.4</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+
+
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.version>0.0.2-SNAPSHOT</project.version>
     </properties>
 
     <licenses>
