@@ -6,7 +6,7 @@
     <parent>
         <groupId>dev.modula.samplemodule</groupId>
         <artifactId>samplemodule-one</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>samplemodule-one-api</artifactId>

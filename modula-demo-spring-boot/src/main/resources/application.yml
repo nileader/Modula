@@ -1,0 +1,13 @@
+modula:
+  modules:
+    - name: "samplemodule-one"
+      adapter-jar: "modules/samplemodule-one/samplemodule-one-impl-1.0.0-adapter.jar"
+      dependency-jars:
+        - "modules/samplemodule-one/lib/logback-classic-1.4.14.jar"
+        - "modules/samplemodule-one/lib/logback-core-1.4.14.jar"
+        - "modules/samplemodule-one/lib/slf4j-api-2.0.7.jar"
+      shared-packages:
+        - "java"
+        - "dev.modula.samplemodule.one.api"
+      exported-classes:
+        - "dev.modula.samplemodule.one.impl.GreetingServiceImpl"

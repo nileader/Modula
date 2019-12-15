@@ -6,15 +6,80 @@
     <parent>
         <groupId>dev.modula.samplemodule</groupId>
         <artifactId>samplemodule-one</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>samplemodule-one-impl</artifactId>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <name>Modula SampleModule One impl</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>dev.modula.samplemodule</groupId>
+            <artifactId>samplemodule-one-api</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 该样例模块自己使用1.2.11的logback，和主应用的需要保持隔离 -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.14</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                    <compilerArgs>
+                        <arg>-Xlint:-options</arg> <!-- 抑制过时选项警告 -->
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!-- 打包 adapter JAR（只包含 GreetingServiceImpl） -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>adapter</id>
+                        <goals><goal>jar</goal></goals>
+                        <configuration>
+                            <classifier>adapter</classifier>
+                            <includes>
+                                <include>dev/modula/samplemodule/one/impl/GreetingServiceImpl.class</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 打包依赖到 lib/（用于部署） -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals><goal>copy-dependencies</goal></goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                            <!-- 排除 samplemodule-one-api，避免重复 -->
+                            <excludeArtifactIds>samplemodule-one-api</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

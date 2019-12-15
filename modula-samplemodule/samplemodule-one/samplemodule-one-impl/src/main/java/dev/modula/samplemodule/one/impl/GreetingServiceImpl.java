@@ -1,27 +1,25 @@
-package dev.modula.demo.impl;
+package dev.modula.samplemodule.one.impl;
 
-import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.pattern.MessageConverter;
-import ch.qos.logback.classic.spi.LoggingEvent;
-import dev.modula.demo.service.MessageFormatter;
+import dev.modula.samplemodule.one.api.GreetingService;
+
 import java.io.File;
 
-public class Logback1211Formatter implements MessageFormatter {
+public class GreetingServiceImpl implements GreetingService {
 
     @Override
-    public String format(String message) {
+    public String greet() {
+
         // 获取当前类的 ClassLoader
         ClassLoader loader = getClass().getClassLoader();
 
         // 获取 logback 核心类的来源 JAR
-        String logbackJar = getJarPath(ch.qos.logback.classic.LoggerContext.class);
-
+        String logbackJar = getJarPath(LoggerContext.class);
+        System.out.println("1.1");
         return String.format(
-                "[✅ Logback 1.2.11 | Loader: %s | Form JAR: %s] %s",
+                "The module samplemodule-one use【Logback 1.4.14】, load result: 【 Loader: %s | Form JAR: %s]】",
                 loader.getClass().getSimpleName(),
-                logbackJar,
-                message
+                logbackJar
         );
     }
 

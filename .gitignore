@@ -1,6 +1,12 @@
 modula-demo/target/
 modula-core/target/
 modula-util/target/
+modula-spring-boot-starter/target/
+modula-samplemodule/samplemodule-one/target/
+modula-demo-spring-boot/target/
 modules/d8y-logback-1.2.11/adapter.jar
 modules/d8y-logback-1.4.14/adapter.jar
+modula-samplemodule/samplemodule-one/samplemodule-one-api/target/
+modula-samplemodule/samplemodule-one/samplemodule-one-impl/target/
+modula-demo-spring-boot/modules/
 .idea/
