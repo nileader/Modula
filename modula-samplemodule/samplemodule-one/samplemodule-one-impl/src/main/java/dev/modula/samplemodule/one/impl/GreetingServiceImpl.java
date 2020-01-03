@@ -15,9 +15,8 @@ public class GreetingServiceImpl implements GreetingService {
 
         // 获取 logback 核心类的来源 JAR
         String logbackJar = getJarPath(LoggerContext.class);
-        System.out.println("1.1");
         return String.format(
-                "The module samplemodule-one use【Logback 1.4.14】, load result: 【 Loader: %s | Form JAR: %s]】",
+                "The Module samplemodule-one use【Logback 1.4.14】, load result: 【 Loader: %s | Form JAR: %s]】",
                 loader.getClass().getSimpleName(),
                 logbackJar
         );

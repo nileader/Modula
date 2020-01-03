@@ -16,9 +16,10 @@
 
     <modules>
         <module>modula-core</module>
-        <module>modula-demo</module>
         <module>modula-util</module>
         <module>modula-spring-boot-starter</module>
+        <module>modula-samplemodule</module>
+        <module>modula-demo-spring-boot</module>
     </modules>
 
     <dependencyManagement>

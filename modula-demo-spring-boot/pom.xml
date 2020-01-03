@@ -6,9 +6,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.18</version>
+        <groupId>dev.modula</groupId>
+        <artifactId>modula</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <groupId>dev.modula.demo</groupId>
@@ -19,9 +19,17 @@
     <name>Modula Demo Spring Boot</name>
     <description>Demo project for Modula modular isolation with Spring Boot</description>
 
-    <properties>
-        <java.version>8</java.version>
-    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.7.18</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- Modula Spring Boot Starter (已 install 到本地仓库) -->
