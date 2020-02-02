@@ -8,5 +8,5 @@ modules/d8y-logback-1.2.11/adapter.jar
 modules/d8y-logback-1.4.14/adapter.jar
 modula-samplemodule/samplemodule-one/samplemodule-one-api/target/
 modula-samplemodule/samplemodule-one/samplemodule-one-impl/target/
-modula-demo-spring-boot/modules/
+modula-demo-spring-boot/src/main/resources/modules/
 .idea/

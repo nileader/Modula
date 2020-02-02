@@ -6,7 +6,7 @@
     <parent>
         <groupId>dev.modula.samplemodule</groupId>
         <artifactId>samplemodule-one</artifactId>
-        <version>1.0.0</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>samplemodule-one-impl</artifactId>
@@ -17,14 +17,19 @@
         <dependency>
             <groupId>dev.modula.samplemodule</groupId>
             <artifactId>samplemodule-one-api</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
 
-        <!-- 该样例模块自己使用1.2.11的logback，和主应用的需要保持隔离 -->
+        <!-- 该样例模块自己使用1.4.14的logback，和主应用的需要保持隔离 -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+            <version>1.4.14</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
             <version>1.4.14</version>
         </dependency>
 
