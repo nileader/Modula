@@ -11,3 +11,14 @@
           - "dev.modula.samplemodule.one.api"
         exported-classes:
           - "dev.modula.samplemodule.one.impl.GreetingServiceImpl"
+      - name: "samplemodule-two"
+        adapter-jar: "classpath:modules/samplemodule-two/samplemodule-two-impl-0.0.2-SNAPSHOT-adapter.jar"
+        dependency-jars:
+          - "classpath:modules/samplemodule-two/lib/logback-classic-1.5.0.jar"
+          - "classpath:modules/samplemodule-two/lib/logback-core-1.5.0.jar"
+          - "classpath:modules/samplemodule-two/lib/slf4j-api-2.0.16.jar"
+        shared-packages:
+          - "java"
+          - "dev.modula.samplemodule.two.api"
+        exported-classes:
+          - "dev.modula.samplemodule.two.impl.TalkingServiceImpl"

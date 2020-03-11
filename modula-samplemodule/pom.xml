@@ -19,6 +19,7 @@
 
     <modules>
         <module>samplemodule-one</module>
+        <module>samplemodule-two</module>
     </modules>
 
     <properties>

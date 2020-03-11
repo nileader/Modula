@@ -1,6 +1,7 @@
 package dev.modula.demo.spring.boot.controller;
 
 import dev.modula.samplemodule.one.api.GreetingService;
+import dev.modula.samplemodule.two.api.TalkingService;
 import dev.modula.spring.boot.ModulaModuleManager;
 import ch.qos.logback.classic.LoggerContext;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ public class SampleModuleOneController {
         this.moduleManager = moduleManager;
     }
 
-    @GetMapping("/samplemodule-one")
+    @GetMapping("/samplemodule")
     public String greet() {
 
         // 获取当前类的 ClassLoader
@@ -32,12 +33,20 @@ public class SampleModuleOneController {
         );
 
         // 从名为 "samplemodule-one" 的模块中获取 GreetingServiceImpl 实例
-        GreetingService service = moduleManager.getInstance(
+        GreetingService service1 = moduleManager.getInstance(
                 "samplemodule-one",
                 "dev.modula.samplemodule.one.impl.GreetingServiceImpl",
                 GreetingService.class
         );
-        resp += "<br/>" + service.greet();
+
+        // 从名为 "samplemodule-two" 的模块中获取 TalkingServiceImpl 实例
+        TalkingService service2 = moduleManager.getInstance(
+                "samplemodule-two",
+                "dev.modula.samplemodule.two.impl.TalkingServiceImpl",
+                TalkingService.class
+        );
+
+        resp += "<br/>" + service1.greet() + "<br/>" + service2.talk();
         return resp;
     }
 

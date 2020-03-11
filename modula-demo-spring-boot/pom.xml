@@ -45,6 +45,13 @@
             <version>${samplemodule-one-api.version}</version>
         </dependency>
 
+        <!-- 共享接口：必须作为 compile 依赖，用于 sharedPackages -->
+        <dependency>
+            <groupId>dev.modula.samplemodule</groupId>
+            <artifactId>samplemodule-two-api</artifactId>
+            <version>${samplemodule-two-api.version}</version>
+        </dependency>
+
 
         <!-- Spring Boot 基础 -->
         <dependency>

@@ -14,6 +14,7 @@
     <description>A lightweight Java class loading isolation runtime</description>
     <url>https://github.com/nileader/Modula</url>
 
+
     <modules>
         <module>modula-core</module>
         <module>modula-util</module>
@@ -49,7 +50,8 @@
         <!-- Logback versions -->
         <logback.version>1.2.11</logback.version>
         <!-- Sample module versions -->
-        <samplemodule-one-api.version>1.0.0</samplemodule-one-api.version>
+        <samplemodule-one-api.version>0.0.2-SNAPSHOT</samplemodule-one-api.version>
+        <samplemodule-two-api.version>0.0.2-SNAPSHOT</samplemodule-two-api.version>
         <!-- Plugin versions -->
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven-jar-plugin.version>3.4.1</maven-jar-plugin.version>
